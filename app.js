@@ -42,6 +42,6 @@ const convertCurrency = async (from, to, amount) =>{
 
 }
 
-convertCurrency('INR','MMM',70).then((resp)=>{
+convertCurrency('INR','USD',70).then((resp)=>{
     console.log(resp) 
 }).catch((e)=>console.log(e.message))
