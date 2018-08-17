@@ -1,18 +1,35 @@
 const axios = require('axios')
 
-const getExchange = (from, to) => {
-   return axios.get(`https://api.exchangeratesapi.io/latest?base=${from}`)
-        .then((res) => {
-            return res.data.rates[to]
-        })
+const getExchange = async (from, to) => {
+    try {
+        const response = await axios.get(`https://api.exchangeratesapi.io/latest?base=${from}`)
+       const rate = res.data.rates[to]
+        if (rate) {
+            return rate
+        } else {
+            throw new Error();
+        }
 
+    } catch (e) {
+
+        throw new Error(`Unable to get Exhange rate for ${from}`)
+        
+    }
+
+
+    
+        
 }
 
-const getCoutries = (countryCode)=>{
-    return axios.get(`https://restcountries.eu/rest/v2/currency/${countryCode}`)
-        .then((countries) => {
-            return countries.data.map((country) => country.name)
-        })
+const getCoutries = async (countryCode)=>{
+    try {
+        const response = await axios.get(`https://restcountries.eu/rest/v2/currency/${countryCode}`)
+                      return countries.data.map((country) => country.name)
+    } catch (e) {
+        throw new Error(`Unable to get Countries ${countryCode}`)    
+    }
+
+    
 }
 
 const convertCurrency = async (from, to, amount) =>{
@@ -25,6 +42,6 @@ const convertCurrency = async (from, to, amount) =>{
 
 }
 
-convertCurrency('INR','USD',70).then((resp)=>{
-    console.log(resp)
-})
+convertCurrency('INR','MMM',70).then((resp)=>{
+    console.log(resp) 
+}).catch((e)=>console.log(e.message))
